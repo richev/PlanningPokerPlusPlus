@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.app.Activity;
+import android.content.pm.PackageManager.NameNotFoundException;
 
 /**
  * An about dialog for the app
@@ -23,9 +24,12 @@ public class AboutActivity extends Activity {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.about);
 	    
-	    LinkifyTextView(R.id.feedback, Linkify.EMAIL_ADDRESSES);
-	    LinkifyTextView(R.id.planningPoker, Linkify.WEB_URLS);
-	    LinkifyTextView(R.id.iconCredits, Linkify.WEB_URLS);
+	    linkifyTextView(R.id.feedback, Linkify.EMAIL_ADDRESSES);
+	    linkifyTextView(R.id.planningPoker, Linkify.WEB_URLS);
+	    linkifyTextView(R.id.iconCredits, Linkify.WEB_URLS);
+
+	    
+	    this.setTitle(this.getTitle() + " v" + getVersionName());
 	    
         final Button button = (Button)findViewById(R.id.closeButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -35,9 +39,24 @@ public class AboutActivity extends Activity {
         });
 	}
 	
-	private void LinkifyTextView(int textViewId, int mask)
+	private void linkifyTextView(int textViewId, int mask)
 	{
 	    TextView textView = (TextView)findViewById(textViewId);
 	    Linkify.addLinks(textView, mask);
+	}
+	
+	private String getVersionName()
+	{
+	    String versionName = "";
+	    try
+	    {
+	    	versionName = this.getPackageManager().getPackageInfo(getApplicationInfo().packageName, 0).versionName;
+	    }
+	    catch (NameNotFoundException ex)
+	    {
+	    	// Required otherwise the compiler complains
+	    }
+	    
+	    return versionName;
 	}
 }
