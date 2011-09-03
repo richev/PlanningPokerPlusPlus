@@ -9,23 +9,20 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.app.Activity;
 
+/**
+ * An about dialog for the app
+ * @author Rich
+ *
+ */
 public class AboutActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
 	    setContentView(R.layout.about);
 	    
-	    TextView feedbackText = (TextView)findViewById(R.id.feedback);
-	    Linkify.addLinks(feedbackText, Linkify.EMAIL_ADDRESSES);
-	    
-	    TextView planningPokerText = (TextView)findViewById(R.id.planningPoker);
-	    Linkify.addLinks(planningPokerText, Linkify.WEB_URLS);
-	    
-	    TextView iconCreditsText = (TextView)findViewById(R.id.iconCredits);
-	    Linkify.addLinks(iconCreditsText, Linkify.WEB_URLS);
-	    
-	    //PackageInfo manager = getPackageManager().getPackageInfo(getPackageName(), 0);
-	    //this.setTitle(this.getTitle() + "v" + manager.versionName);
+	    LinkifyTextView(R.id.feedback, Linkify.EMAIL_ADDRESSES);
+	    LinkifyTextView(R.id.planningPoker, Linkify.WEB_URLS);
+	    LinkifyTextView(R.id.iconCredits, Linkify.WEB_URLS);
 	    
         final Button button = (Button)findViewById(R.id.closeButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -33,5 +30,11 @@ public class AboutActivity extends Activity {
         		finish();
             }
         });
+	}
+	
+	private void LinkifyTextView(int textViewId, int mask)
+	{
+	    TextView textView = (TextView)findViewById(textViewId);
+	    Linkify.addLinks(textView, mask);
 	}
 }
