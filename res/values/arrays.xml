@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- UI strings shown on settings page -->
+    <string-array name="cardSequenceDisplayNames">
+        <item>Compact Fibonacci\n1 2 3 5 8</item>
+        <item>Regular Fibonacci\n1 2 3 5 8 13 21</item>
+        <item>Extended Fibonacci\n1 2 3 5 8 13 20 40 100</item>
+        <item>Monetary Sequence\n1 2 5 10 20 50 100</item>
+    </string-array>
+    <!-- Internal IDs -->
+    <string-array name="cardSequenceNames">
+        <item>fibonacci8</item>
+        <item>fibonacci21</item>
+        <item>extendedFibonacci</item>
+        <item>moneySequence</item>
+    </string-array>
+    <!-- Space-delimited card values -->
+    <string-array name="cardSequenceValues">
+        <item>1 2 3 5 8</item>
+        <item>1 2 3 5 8 13 21</item>
+        <item>1 2 3 5 8 13 20 40 100</item>
+        <item>1 2 5 10 20 50 100</item>
+    </string-array>
+</resources>
