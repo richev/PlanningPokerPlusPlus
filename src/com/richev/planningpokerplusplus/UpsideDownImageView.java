@@ -1,3 +1,6 @@
+// Planning Poker++ for Android, copyright © Richard Everett 2011
+// Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/
+
 package com.richev.planningpokerplusplus;
 
 import android.content.Context;

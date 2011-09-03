@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Planning Poker++ for Android, copyright © Richard Everett 2011 -->
+<!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
+
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <stroke android:width="2dp" android:color="#888888" />
     <padding android:left="0dp" android:top="0dp"

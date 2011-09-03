@@ -1,4 +1,3 @@
-Planning Poker++
-Copyright © 2011 Richard Everett
+Planning Poker++ for Android, copyright © 2011 Richard Everett
 
 No specific license yet, but please don't rip off this codebase for use in your own similar app.

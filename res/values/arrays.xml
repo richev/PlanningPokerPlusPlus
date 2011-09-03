@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Planning Poker++ for Android, copyright © Richard Everett 2011 -->
+<!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
+
 <resources>
 	<!-- UI strings shown on settings page -->
     <string-array name="cardSequenceDisplayNames">

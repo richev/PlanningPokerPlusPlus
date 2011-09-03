@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Planning Poker++ for Android, copyright © Richard Everett 2011 -->
+<!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
+
 <resources>
     <string name="app_name">Planning Poker++</string>
     <string name="settings">Card Settings</string>
