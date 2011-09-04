@@ -30,7 +30,7 @@ public class CardActivity extends MenuedActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card);
 
-        _cardValue = (String) getIntent().getExtras().get("cardValue"); // set in MainActivity
+        _cardValue = (String)getIntent().getExtras().get("cardValue"); // set in MainActivity
 
         TextView[] cardValueViews =
         {
@@ -46,7 +46,20 @@ public class CardActivity extends MenuedActivity
             cardValueViews[i].setText(_cardValue);
         }
 
-        float centerCardValueTextSize = _cardValue.length() == 1 ? TEXT_SIZE_ONE_CHAR : _cardValue.length() == 2 ? TEXT_SIZE_TWO_CHARS : TEXT_SIZE_THREE_CHARS;
+        float centerCardValueTextSize;
+
+        switch (_cardValue.length())
+        {
+            case 1:
+                centerCardValueTextSize = TEXT_SIZE_ONE_CHAR;
+                break;
+            case 2:
+                centerCardValueTextSize = TEXT_SIZE_TWO_CHARS;
+                break;
+            default:
+                centerCardValueTextSize = TEXT_SIZE_THREE_CHARS;
+        }
+
         ((TextView)findViewById(R.id.cardValueCenter)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, centerCardValueTextSize);
     }
 
