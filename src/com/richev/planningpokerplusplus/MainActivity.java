@@ -1,4 +1,4 @@
-// Planning Poker++ for Android, copyright © Richard Everett 2011
+// Planning Poker++ for Android, copyright ï¿½ Richard Everett 2011
 // Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/
 
 package com.richev.planningpokerplusplus;
@@ -39,10 +39,9 @@ public class MainActivity extends MenuedActivity
      */
     public void showCardButtons()
     {
-        final LinearLayout buttonsLayout = (LinearLayout) findViewById(R.id.buttonsLayout);
+        final LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonsLayout);
 
-        String[] cardValues = Utils.getCardValues(getResources(),
-                PreferenceManager.getDefaultSharedPreferences(this));
+        String[] cardValues = Utils.getCardValues(getResources(), PreferenceManager.getDefaultSharedPreferences(this));
 
         buttonsLayout.removeAllViews();
 
@@ -56,9 +55,7 @@ public class MainActivity extends MenuedActivity
             {
                 public void onClick(View v)
                 {
-                    Intent myIntent = new Intent(
-                        v.getContext(),
-                        this.getCardValue() == "coffee" ? CoffeeCardActivity.class : CardActivity.class);
+                    Intent myIntent = new Intent(v.getContext(), CardActivity.class);
                     myIntent.putExtra("cardValue", this.getCardValue()); // this will be read in CardActivity
                     startActivityForResult(myIntent, 0);
                 }
