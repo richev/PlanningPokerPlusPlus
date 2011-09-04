@@ -3,36 +3,36 @@
 <!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<CheckBoxPreference
-		android:title="0 (zero)"
-		android:summary="For a story that is very small or already completed"
-		android:key="includeZero"
-		android:defaultValue="true" />
-	<CheckBoxPreference
-		android:title="½ (half)"
-		android:summary="For a story that is less than one point"
-		android:key="includeHalf"
-		android:defaultValue="true" />
-	<ListPreference
-		android:title="Main card sequence"
-		android:summary="The sequence of cards that is the core of the deck"
-		android:key="cardSequence"
-		android:defaultValue="fibonacci21"
-		android:entries="@array/cardSequenceDisplayNames"
-		android:entryValues="@array/cardSequenceNames" />
-	<CheckBoxPreference
-		android:title="∞ (infinity)"
-		android:summary="For a story that is huge"
-		android:key="includeInfinity"
-		android:defaultValue="true" />
-	<CheckBoxPreference
-		android:title="\? (unknown)"
-		android:summary="For a story that needs more detail"
-		android:key="includeUnknown"
-		android:defaultValue="true" />
-	<CheckBoxPreference
-		android:title="coffee"
-		android:summary="For when you need a break from planning poker"
-		android:key="includeCoffee"
-		android:defaultValue="true" />
+    <CheckBoxPreference
+        android:title="0 (zero)"
+        android:summary="For a story that is very small or already completed"
+        android:key="includeZero"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:title="½ (half)"
+        android:summary="For a story that is less than one point"
+        android:key="includeHalf"
+        android:defaultValue="true" />
+    <ListPreference
+        android:title="Main card sequence"
+        android:summary="The sequence of cards that is the core of the deck"
+        android:key="cardSequence"
+        android:defaultValue="fibonacci21"
+        android:entries="@array/cardSequenceDisplayNames"
+        android:entryValues="@array/cardSequenceNames" />
+    <CheckBoxPreference
+        android:title="∞ (infinity)"
+        android:summary="For a story that is huge"
+        android:key="includeInfinity"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:title="\? (unknown)"
+        android:summary="For a story that needs more detail"
+        android:key="includeUnknown"
+        android:defaultValue="true" />
+    <CheckBoxPreference
+        android:title="coffee"
+        android:summary="For when you need a break from planning poker"
+        android:key="includeCoffee"
+        android:defaultValue="true" />
 </PreferenceScreen>

@@ -3,7 +3,7 @@
 <!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
 
 <resources>
-	<!-- UI strings shown on settings page -->
+    <!-- UI strings shown on settings page -->
     <string-array name="cardSequenceDisplayNames">
         <item>Compact Fibonacci\n1 2 3 5 8</item>
         <item>Regular Fibonacci\n1 2 3 5 8 13 21</item>

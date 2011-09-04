@@ -2,20 +2,21 @@
 <!-- Planning Poker++ for Android, copyright © Richard Everett 2011 -->
 <!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:id="@+id/mainLayout"
-	android:orientation="vertical"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <ScrollView
-    	android:fillViewport="true"
-	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent">
-	    <LinearLayout 
-			android:id="@+id/buttonsLayout"
-			android:orientation="vertical"
-		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent">
-	    </LinearLayout>
+        android:fillViewport="true"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:id="@+id/buttonsLayout"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        </LinearLayout>
     </ScrollView>
 </LinearLayout>

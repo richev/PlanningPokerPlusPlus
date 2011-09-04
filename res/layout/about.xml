@@ -2,42 +2,75 @@
 <!-- Planning Poker++ for Android, copyright © Richard Everett 2011 -->
 <!-- Full source available on Github at http://richev.github.com/PlanningPokerPlusPlus/ -->
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="wrap_content" android:layout_height="wrap_content">
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentTop="true">
-		<LinearLayout android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="wrap_content">
-			<ImageView android:layout_height="wrap_content"
-				android:src="@drawable/app_icon" android:layout_width="wrap_content"
-				android:id="@+id/imageView1" />
-			<TextView android:layout_width="wrap_content" android:text="@string/about_text"
-				android:layout_height="wrap_content" android:id="@+id/about" />
-		</LinearLayout>
-	</LinearLayout>
-	<LinearLayout android:orientation="vertical"
-		android:layout_width="fill_parent" android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true">
-		<TextView android:layout_width="wrap_content" android:text="@string/planning_poker"
-			android:layout_height="wrap_content" android:layout_gravity="center_horizontal"
-			android:gravity="center_horizontal" android:id="@+id/planningPoker"
-			android:layout_marginBottom="10dp" />
-		<TextView android:layout_width="wrap_content" android:text="@string/feedback_text"
-			android:id="@+id/feedback" android:layout_gravity="center_horizontal"
-			android:gravity="center_horizontal" android:layout_height="wrap_content"
-			android:layout_marginBottom="10dp" />
-		<TextView android:layout_width="wrap_content" android:text="@string/icon_credits"
-			android:id="@+id/iconCredits" android:layout_gravity="center_horizontal"
-			android:gravity="center_horizontal" android:layout_height="wrap_content"
-			android:layout_marginBottom="10dp" />
-		<TextView android:layout_width="wrap_content" android:text="@string/copyright_text"
-			android:gravity="center_horizontal" android:layout_gravity="center_horizontal"
-			android:layout_height="wrap_content" android:layout_marginBottom="10dp" />
-		<Button android:layout_height="wrap_content"
-			android:layout_gravity="center_horizontal" android:layout_width="wrap_content"
-			android:text="@string/about_close" android:textSize="20dp"
-			android:id="@+id/closeButton" android:layout_centerHorizontal="true"
-			android:layout_marginBottom="10dp" />
-	</LinearLayout>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:layout_height="wrap_content"
+                android:src="@drawable/app_icon"
+                android:layout_width="wrap_content"
+                android:id="@+id/imageView1" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/about_text"
+                android:layout_height="wrap_content"
+                android:id="@+id/about" />
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/planning_poker"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:id="@+id/planningPoker"
+            android:layout_marginBottom="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/feedback_text"
+            android:id="@+id/feedback"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/icon_credits"
+            android:id="@+id/iconCredits"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="@string/copyright_text"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp" />
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:text="@string/about_close"
+            android:textSize="20dp"
+            android:id="@+id/closeButton"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp" />
+    </LinearLayout>
 </RelativeLayout>
