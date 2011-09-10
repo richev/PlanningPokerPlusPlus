@@ -1,3 +1,6 @@
+// Planning Poker++ for Android, copyright (c) Richard Everett 2011
+// Full source available on GitHub at http://richev.github.com/PlanningPokerPlusPlus
+
 package com.richev.planningpokerplusplus;
 
 import android.content.SharedPreferences;
@@ -18,11 +21,6 @@ public class Preferences
     public Preferences(SharedPreferences prefs)
     {
         _prefs = prefs;
-    }
-    
-    public boolean getHideCardOnTap()
-    {
-        return _prefs.getBoolean("hideCardOnTap", true);        
     }
     
     public boolean getIncludeZero()

@@ -38,7 +38,6 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private static final int TEXT_SIZE_THREE_CHARS = 180;
 
     private static final int SWIPE_MIN_DISTANCE = 120;
-    private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector _gestureDetector;
     private View.OnTouchListener _gestureListener;
@@ -74,34 +73,22 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private class MyGestureDetector extends SimpleOnGestureListener
     {
         @Override
-        public boolean onSingleTapUp(MotionEvent e)
-        {
-            if (_prefs.getHideCardOnTap())
-            {
-                toggleCardBack();
-            }
-            return false;
-        }
-        
-        @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
         {
-            if (!getCardBackShown()) // if the back of the card is shown, then flinging makes no sense
+            if (!getCardBackShown() && (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY))
             {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                {
-                    return false;
-                }
-                
                 // right to left swipe
-                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
-                    decrementCard();
-                }
-                else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
-                {
-                    incrementCard();
-                }
+                decrementCard();
+            }
+            else if (!getCardBackShown() && (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) && (Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY))
+            {
+                // left to right swipe
+                incrementCard();
+            }
+            else if ((e1.getY() - e2.getY() > SWIPE_MIN_DISTANCE) && (Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY))
+            {
+                // vertical swipe
+                toggleCardBack();
             }
             return false;
         }
@@ -145,12 +132,6 @@ public class CardActivity extends MenuedActivity implements OnClickListener
 
         // The settings dialog may have been invoked...
         
-        if (!_prefs.getHideCardOnTap() && getCardBackShown())
-        {
-            // The back of the card is shown, but this setting is no longer on
-            toggleCardBack();
-        }
-
         // This card value may no longer be allowed.
         _cardValues = Utils.getCardValues(getResources(), _prefs);
 
@@ -222,7 +203,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         
         if (getCardBackShown())
         {
-            ta = new TranslateAnimation(0, 0, 0, display.getHeight());
+            ta = new TranslateAnimation(0, 0, 0, -display.getHeight());
             ta.setAnimationListener(new AnimationListener()
             {
                 public void onAnimationEnd(Animation animation)

@@ -24,11 +24,12 @@ public final class R {
     public static final class drawable {
         public static final int app_icon=0x7f020000;
         public static final int card_back=0x7f020001;
-        public static final int cardborder=0x7f020002;
-        public static final int coffee=0x7f020003;
-        public static final int ic_menu_settings=0x7f020004;
-        public static final int ic_menu_share=0x7f020005;
-        public static final int ic_menu_tag=0x7f020006;
+        public static final int card_back_border=0x7f020002;
+        public static final int card_border=0x7f020003;
+        public static final int coffee=0x7f020004;
+        public static final int ic_menu_settings=0x7f020005;
+        public static final int ic_menu_share=0x7f020006;
+        public static final int ic_menu_tag=0x7f020007;
     }
     public static final class id {
         public static final int about=0x7f080001;
