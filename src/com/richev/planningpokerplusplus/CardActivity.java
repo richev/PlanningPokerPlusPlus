@@ -19,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 /**
@@ -41,6 +42,9 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector _gestureDetector;
     private View.OnTouchListener _gestureListener;
+
+    private static final int CARD_ANIMATION_DURATION = 400;
+    
     
     private Preferences _prefs;
 
@@ -168,28 +172,29 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         }
     }
     
-    private void rotateCard(CardTransition cardTransition)
+    private void animateCard(CardTransition cardTransition)
     {
-        Display display = getWindowManager().getDefaultDisplay(); 
-        int width = display.getWidth();
-        int height = display.getHeight();            
-
         View animatedCard = findViewById(R.id.cardLayoutAni);
         findViewById(R.id.cardLayoutAni).setVisibility(View.VISIBLE);
         animatedCard.bringToFront();
+        
+        Display display = getWindowManager().getDefaultDisplay(); 
+        final int pivotX = display.getWidth() / 2;
+        final int pivotY = display.getHeight() + (display.getHeight() / 2); // somewhere off the bottom of the screen        
+        final int cardMaxAngle = 60; // so the card starts/ends off-screen
         
         RotateAnimation ra;
         
         if (cardTransition == CardTransition.Increment)
         {
-            ra = new RotateAnimation(0, 60, width / 2, height + (height / 2));
+            ra = new RotateAnimation(0, cardMaxAngle, pivotX, pivotY);
         }
         else
         {
-            ra = new RotateAnimation(60, 0, width / 2, height + (height / 2));
+            ra = new RotateAnimation(cardMaxAngle, 0, pivotX, pivotY);
         }
         
-        ra.setDuration(400);
+        ra.setDuration(CARD_ANIMATION_DURATION);
         ra.setAnimationListener(new AnimationListener()
         {
             public void onAnimationEnd(Animation animation)
@@ -211,17 +216,35 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     
     private void toggleCardBack()
     {
+        View backLayout = findViewById(R.id.backLayout);
+        Display display = getWindowManager().getDefaultDisplay(); 
+        TranslateAnimation ta;
+        
         if (getCardBackShown())
         {
-            findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
+            ta = new TranslateAnimation(0, 0, 0, display.getHeight());
+            ta.setAnimationListener(new AnimationListener()
+            {
+                public void onAnimationEnd(Animation animation)
+                {
+                    findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
+                }
+                public void onAnimationRepeat(Animation animation) {}
+                public void onAnimationStart(Animation animation) {}
+            });    
             findViewById(R.id.cardContainer).setKeepScreenOn(true);
         }
         else
         {
-            findViewById(R.id.backLayout).setVisibility(View.VISIBLE);
-            findViewById(R.id.backLayout).bringToFront();
+            ta = new TranslateAnimation(0, 0, display.getHeight(), 0);
+            
+            backLayout.setVisibility(View.VISIBLE);
+            backLayout.bringToFront();
             findViewById(R.id.cardContainer).setKeepScreenOn(false);
         }
+        
+        ta.setDuration(CARD_ANIMATION_DURATION);
+        backLayout.startAnimation(ta);
     }
 
     private void incrementCard()
@@ -237,7 +260,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                     refreshCard(CardView.Animated);
                     _cardValue = _cardValues[nextCard];
                     refreshCard(CardView.Static);
-                    rotateCard(CardTransition.Increment);
+                    animateCard(CardTransition.Increment);
                 }
                 else
                 {
@@ -260,7 +283,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                 {
                     _cardValue = _cardValues[prevCard];
                     refreshCard(CardView.Animated);
-                    rotateCard(CardTransition.Decrement);
+                    animateCard(CardTransition.Decrement);
                 }
                 else
                 {
