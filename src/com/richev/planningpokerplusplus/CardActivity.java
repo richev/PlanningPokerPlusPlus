@@ -10,11 +10,15 @@ import android.os.Bundle;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.RotateAnimation;
 import android.widget.TextView;
 
 /**
@@ -40,6 +44,25 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     
     private Preferences _prefs;
 
+    private enum CardView
+    {
+        /**
+         * The card view used for normally displaying the card
+         */
+        Static,
+        
+        /**
+         * The card view used for showing the animated card transition
+         */
+        Animated
+    }
+    
+    private enum CardTransition
+    {
+        Increment,
+        Decrement
+    }
+    
     /**
      * Based on code from http://stackoverflow.com/questions/937313/android-basic-gesture-detection/938657#938657
      *
@@ -69,14 +92,12 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                 // right to left swipe
                 if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                 {
-                    incrementCardValue();
+                    decrementCard();
                 }
                 else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY)
                 {
-                    decrementCardValue();
+                    incrementCard();
                 }
-                
-                refreshCard();
             }
             return false;
         }
@@ -106,9 +127,11 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             }
         };
 
-        addListeners(R.id.cardContainer);
+        View cardContainer = findViewById(R.id.cardContainer);
+        cardContainer.setOnClickListener(CardActivity.this); 
+        cardContainer.setOnTouchListener(_gestureListener);
 
-        refreshCard();
+        refreshCard(CardView.Static);
     }
 
     @Override
@@ -145,6 +168,42 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         }
     }
     
+    private void rotateCard(CardTransition cardTransition)
+    {
+        Display display = getWindowManager().getDefaultDisplay(); 
+        int width = display.getWidth();
+        int height = display.getHeight();            
+
+        View animatedCard = findViewById(R.id.cardLayoutAni);
+        findViewById(R.id.cardLayoutAni).setVisibility(View.VISIBLE);
+        animatedCard.bringToFront();
+        
+        RotateAnimation ra;
+        
+        if (cardTransition == CardTransition.Increment)
+        {
+            ra = new RotateAnimation(0, 60, width / 2, height + (height / 2));
+        }
+        else
+        {
+            ra = new RotateAnimation(60, 0, width / 2, height + (height / 2));
+        }
+        
+        ra.setDuration(400);
+        ra.setAnimationListener(new AnimationListener()
+        {
+            public void onAnimationEnd(Animation animation)
+            {
+                refreshCard(CardView.Static);
+                findViewById(R.id.cardLayoutAni).setVisibility(View.INVISIBLE);
+            }
+            public void onAnimationRepeat(Animation animation) {}
+            public void onAnimationStart(Animation animation) {}
+        });
+        
+        animatedCard.startAnimation(ra);
+    }
+    
     private boolean getCardBackShown()
     {
         return findViewById(R.id.backLayout).getVisibility() == View.VISIBLE;
@@ -154,27 +213,18 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     {
         if (getCardBackShown())
         {
-            refreshCard();
+            findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
             findViewById(R.id.cardContainer).setKeepScreenOn(true);
         }
         else
         {
-            // Show the card back
-            findViewById(R.id.cardLayout).setVisibility(View.INVISIBLE);
-            findViewById(R.id.coffeeLayout).setVisibility(View.INVISIBLE);
             findViewById(R.id.backLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.backLayout).bringToFront();
             findViewById(R.id.cardContainer).setKeepScreenOn(false);
         }
     }
-    
-    private void addListeners(int viewId)
-    {
-        View view = findViewById(viewId);
-        view.setOnClickListener(CardActivity.this); 
-        view.setOnTouchListener(_gestureListener);
-    }
 
-    private void incrementCardValue()
+    private void incrementCard()
     {
         for (int i = 0; i < _cardValues.length; i++)
         {
@@ -184,7 +234,10 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                 
                 if (nextCard <= _cardValues.length - 1)
                 {
+                    refreshCard(CardView.Animated);
                     _cardValue = _cardValues[nextCard];
+                    refreshCard(CardView.Static);
+                    rotateCard(CardTransition.Increment);
                 }
                 else
                 {
@@ -195,7 +248,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         }
     }
     
-    private void decrementCardValue()
+    private void decrementCard()
     {
         for (int i = 0; i < _cardValues.length; i++)
         {
@@ -206,6 +259,8 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                 if (prevCard >= 0)
                 {
                     _cardValue = _cardValues[prevCard];
+                    refreshCard(CardView.Animated);
+                    rotateCard(CardTransition.Decrement);
                 }
                 else
                 {
@@ -223,28 +278,49 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         vibrator.vibrate(50);
     }
 
-    private void refreshCard()
+    private void refreshCard(CardView cardView)
     {
         findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
 
         if (_cardValue.equals("coffee"))
         {
-            findViewById(R.id.cardLayout).setVisibility(View.INVISIBLE);
-            findViewById(R.id.coffeeLayout).setVisibility(View.VISIBLE);
+            findViewById(R.id.coffeeLayout).bringToFront();
         }
         else
         {
-            findViewById(R.id.cardLayout).setVisibility(View.VISIBLE);
-            findViewById(R.id.coffeeLayout).setVisibility(View.INVISIBLE);
-
-            TextView[] cardValueViews =
+            TextView[] cardValueViews; 
+            
+            if (cardView == CardView.Static)
             {
-                (TextView)findViewById(R.id.cardValueTopLeft),
-                (TextView)findViewById(R.id.cardValueTopRight),
-                (TextView)findViewById(R.id.cardValueCenter),
-                (TextView)findViewById(R.id.cardValueBottomLeft),
-                (TextView)findViewById(R.id.cardValueBottomRight)
-            };
+                findViewById(R.id.cardLayout).bringToFront();
+
+                TextView[] cardValueViewsStatic =
+                {
+                    (TextView)findViewById(R.id.cardValueTopLeft),
+                    (TextView)findViewById(R.id.cardValueTopRight),
+                    (TextView)findViewById(R.id.cardValueCenter),
+                    (TextView)findViewById(R.id.cardValueBottomLeft),
+                    (TextView)findViewById(R.id.cardValueBottomRight)
+                };
+                
+                cardValueViews = cardValueViewsStatic;
+            }
+            else
+            {
+                findViewById(R.id.cardLayoutAni).bringToFront();
+                findViewById(R.id.cardLayoutAni).setVisibility(View.VISIBLE);
+
+                TextView[] cardValueViewsAni =
+                {
+                    (TextView)findViewById(R.id.cardValueTopLeftAni),
+                    (TextView)findViewById(R.id.cardValueTopRightAni),
+                    (TextView)findViewById(R.id.cardValueCenterAni),
+                    (TextView)findViewById(R.id.cardValueBottomLeftAni),
+                    (TextView)findViewById(R.id.cardValueBottomRightAni)
+                };
+                
+                cardValueViews = cardValueViewsAni;
+            }
     
             for (int i = 0; i < cardValueViews.length; i++)
             {
@@ -265,7 +341,8 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                     centerCardValueTextSize = TEXT_SIZE_THREE_CHARS;
             }
     
-            ((TextView)findViewById(R.id.cardValueCenter)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, centerCardValueTextSize);
+            ((TextView)findViewById(cardView == CardView.Static ? R.id.cardValueCenter : R.id.cardValueCenterAni))
+                .setTextSize(TypedValue.COMPLEX_UNIT_DIP, centerCardValueTextSize);
         }
     }
 }

@@ -32,24 +32,30 @@ public final class R {
     }
     public static final class id {
         public static final int about=0x7f080001;
-        public static final int backLayout=0x7f08000e;
-        public static final int buttonsLayout=0x7f080010;
+        public static final int backLayout=0x7f080014;
+        public static final int buttonsLayout=0x7f080016;
         public static final int cardContainer=0x7f080006;
         public static final int cardLayout=0x7f080007;
+        public static final int cardLayoutAni=0x7f08000d;
         public static final int cardValueBottomLeft=0x7f08000b;
+        public static final int cardValueBottomLeftAni=0x7f080011;
         public static final int cardValueBottomRight=0x7f08000c;
+        public static final int cardValueBottomRightAni=0x7f080012;
         public static final int cardValueCenter=0x7f08000a;
+        public static final int cardValueCenterAni=0x7f080010;
         public static final int cardValueTopLeft=0x7f080008;
+        public static final int cardValueTopLeftAni=0x7f08000e;
         public static final int cardValueTopRight=0x7f080009;
+        public static final int cardValueTopRightAni=0x7f08000f;
         public static final int closeButton=0x7f080005;
-        public static final int coffeeLayout=0x7f08000d;
+        public static final int coffeeLayout=0x7f080013;
         public static final int feedback=0x7f080003;
         public static final int iconCredits=0x7f080004;
         public static final int imageView1=0x7f080000;
-        public static final int mainLayout=0x7f08000f;
+        public static final int mainLayout=0x7f080015;
         public static final int planningPoker=0x7f080002;
-        public static final int settings=0x7f080011;
-        public static final int share=0x7f080012;
+        public static final int settings=0x7f080017;
+        public static final int share=0x7f080018;
     }
     public static final class layout {
         public static final int about=0x7f030000;
