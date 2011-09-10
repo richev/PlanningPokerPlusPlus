@@ -155,7 +155,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         if (getCardBackShown())
         {
             refreshCard();
-            getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            findViewById(R.id.cardContainer).setKeepScreenOn(true);
         }
         else
         {
@@ -163,7 +163,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             findViewById(R.id.cardLayout).setVisibility(View.INVISIBLE);
             findViewById(R.id.coffeeLayout).setVisibility(View.INVISIBLE);
             findViewById(R.id.backLayout).setVisibility(View.VISIBLE);
-            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            findViewById(R.id.cardContainer).setKeepScreenOn(false);
         }
     }
     
