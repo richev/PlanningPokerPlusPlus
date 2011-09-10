@@ -35,4 +35,9 @@
         android:summary="For when you need a break from planning poker"
         android:key="includeCoffee"
         android:defaultValue="true" />
+    <CheckBoxPreference
+        android:title="Hide card on tap"
+        android:summary="So that you can toggle hiding of a selected card with a short press"
+        android:key="hideCardOnTap"
+        android:defaultValue="true" />
 </PreferenceScreen>

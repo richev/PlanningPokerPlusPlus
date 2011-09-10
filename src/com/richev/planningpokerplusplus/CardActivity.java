@@ -5,7 +5,9 @@ package com.richev.planningpokerplusplus;
 
 import com.richev.planningpokerplusplus.R;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
 import android.view.GestureDetector;
@@ -34,18 +36,30 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private static final int SWIPE_MAX_OFF_PATH = 250;
     private static final int SWIPE_THRESHOLD_VELOCITY = 200;
     private GestureDetector _gestureDetector;
-    View.OnTouchListener _gestureListener;
+    private View.OnTouchListener _gestureListener;
+    
+    private Preferences _prefs;
 
     /**
      * Based on code from http://stackoverflow.com/questions/937313/android-basic-gesture-detection/938657#938657
      *
      */
-    class MyGestureDetector extends SimpleOnGestureListener
+    private class MyGestureDetector extends SimpleOnGestureListener
     {
+        @Override
+        public boolean onSingleTapUp(MotionEvent e)
+        {
+            if (_prefs.getHideCardOnTap())
+            {
+                toggleCardBack();
+            }
+            return false;
+        }
+        
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
         {
-            try
+            if (!getCardBackShown()) // if the back of the card is shown, then flinging makes no sense
             {
                 if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                 {
@@ -61,19 +75,15 @@ public class CardActivity extends MenuedActivity implements OnClickListener
                 {
                     decrementCardValue();
                 }
-            }
-            catch (Exception e)
-            {
-                // nothing
+                
+                refreshCard();
             }
             return false;
         }
-
     }
 
     public void onClick(View v)
     {
-        updateCardValue();
     }
 
     @Override
@@ -82,7 +92,9 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.card);
 
-        _cardValues = Utils.getCardValues(getResources(), PreferenceManager.getDefaultSharedPreferences(this));        
+        _prefs = new Preferences(PreferenceManager.getDefaultSharedPreferences(this));
+        
+        _cardValues = Utils.getCardValues(getResources(), _prefs);        
         _cardValue = (String)getIntent().getExtras().get("cardValue"); // set in MainActivity
 
         _gestureDetector = new GestureDetector(new MyGestureDetector());
@@ -94,10 +106,65 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             }
         };
 
-        addListeners(R.id.cardLayout);
-        addListeners(R.id.coffeeLayout);
+        addListeners(R.id.cardContainer);
 
-        updateCardValue();
+        refreshCard();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+
+        // The settings dialog may have been invoked...
+        
+        if (!_prefs.getHideCardOnTap() && getCardBackShown())
+        {
+            // The back of the card is shown, but this setting is no longer on
+            toggleCardBack();
+        }
+
+        // This card value may no longer be allowed.
+        _cardValues = Utils.getCardValues(getResources(), _prefs);
+
+        Boolean cardValueAllowed = false;
+
+        for (int i = 0; i < _cardValues.length; i++)
+        {
+            if (_cardValues[i].equals(_cardValue))
+            {
+                cardValueAllowed = true;
+                break;
+            }
+        }
+
+        if (!cardValueAllowed)
+        {
+            // Close this activity, which will return us to the main activity
+            this.finish();
+        }
+    }
+    
+    private boolean getCardBackShown()
+    {
+        return findViewById(R.id.backLayout).getVisibility() == View.VISIBLE;
+    }
+    
+    private void toggleCardBack()
+    {
+        if (getCardBackShown())
+        {
+            refreshCard();
+            getWindow().addFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
+        else
+        {
+            // Show the card back
+            findViewById(R.id.cardLayout).setVisibility(View.INVISIBLE);
+            findViewById(R.id.coffeeLayout).setVisibility(View.INVISIBLE);
+            findViewById(R.id.backLayout).setVisibility(View.VISIBLE);
+            getWindow().clearFlags(android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        }
     }
     
     private void addListeners(int viewId)
@@ -113,9 +180,15 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         {
             if (_cardValue.equals(_cardValues[i]))
             {
-                if (i <= _cardValues.length - 1)
+                int nextCard = i + 1;
+                
+                if (nextCard <= _cardValues.length - 1)
                 {
-                    _cardValue = _cardValues[i + 1];
+                    _cardValue = _cardValues[nextCard];
+                }
+                else
+                {
+                    vibrate(); // to hint to the user that there is no lower card
                 }
                 break;
             }
@@ -128,17 +201,32 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         {
             if (_cardValue.equals(_cardValues[i]))
             {
-                if (i >= 1)
+                int prevCard = i - 1;
+                
+                if (prevCard >= 0)
                 {
-                    _cardValue = _cardValues[i - 1];
+                    _cardValue = _cardValues[prevCard];
+                }
+                else
+                {
+                    vibrate(); // to hint to the user that there is no higher card
                 }
                 break;
             }
         }
     }
-
-    private void updateCardValue()
+    
+    private void vibrate()
     {
+        Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+
+        vibrator.vibrate(50);
+    }
+
+    private void refreshCard()
+    {
+        findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
+
         if (_cardValue.equals("coffee"))
         {
             findViewById(R.id.cardLayout).setVisibility(View.INVISIBLE);
@@ -178,33 +266,6 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             }
     
             ((TextView)findViewById(R.id.cardValueCenter)).setTextSize(TypedValue.COMPLEX_UNIT_DIP, centerCardValueTextSize);
-        }
-    }
-
-    @Override
-    public void onResume()
-    {
-        super.onResume();
-
-        // The settings dialog may have been invoked, in which case this card
-        // value may no longer be allowed.
-        _cardValues = Utils.getCardValues(getResources(), PreferenceManager.getDefaultSharedPreferences(this));
-
-        Boolean cardValueAllowed = false;
-
-        for (int i = 0; i < _cardValues.length; i++)
-        {
-            if (_cardValues[i].equals(_cardValue))
-            {
-                cardValueAllowed = true;
-                break;
-            }
-        }
-
-        if (!cardValueAllowed)
-        {
-            // Close this activity, which will return us to the main activity
-            this.finish();
         }
     }
 }

@@ -6,7 +6,6 @@ package com.richev.planningpokerplusplus;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 
@@ -22,35 +21,35 @@ public class Utils
      * Gets the sequence of card values, based on user settings
      * 
      * @param res use getResources()
-     * @param prefs use PreferenceManager.getDefaultSharedPreferences(this)
+     * @param prefs use new Preferences(PreferenceManager.getDefaultSharedPreferences(this))
      */
-    public static String[] getCardValues(Resources res, SharedPreferences prefs)
+    public static String[] getCardValues(Resources res, Preferences prefs)
     {
         ArrayList<String> cardValues = new ArrayList<String>();
 
-        if (prefs.getBoolean("includeZero", true))
+        if (prefs.getIncludeZero())
         {
             cardValues.add("0");
         }
 
-        if (prefs.getBoolean("includeHalf", true))
+        if (prefs.getIncludeHalf())
         {
             cardValues.add("½");
         }
 
-        cardValues.addAll(getCardSequence(res, prefs));
+        cardValues.addAll(getCardSequence(res, prefs.getCardSequenceName()));
 
-        if (prefs.getBoolean("includeInfinity", true))
+        if (prefs.getIncludeInfinity())
         {
             cardValues.add("∞");
         }
 
-        if (prefs.getBoolean("includeUnknown", true))
+        if (prefs.getIncludeUnknown())
         {
             cardValues.add("?");
         }
 
-        if (prefs.getBoolean("includeCoffee", true))
+        if (prefs.getIncludeCoffee())
         {
             cardValues.add("coffee");
         }
@@ -58,11 +57,10 @@ public class Utils
         return cardValues.toArray(new String[cardValues.size()]);
     }
 
-    private static ArrayList<String> getCardSequence(Resources res, SharedPreferences prefs)
+    private static ArrayList<String> getCardSequence(Resources res, String cardSequenceName)
     {
         String[] cardSequenceNames = res.getStringArray(R.array.cardSequenceNames);
         String[] cardSequenceValues = res.getStringArray(R.array.cardSequenceValues);
-        String cardSequenceName = prefs.getString("cardSequence", "fibonacci21");
 
         String cardSequenceValue = cardSequenceValues[1]; // set to a default value (fibonacci21), in case we don't find one
 

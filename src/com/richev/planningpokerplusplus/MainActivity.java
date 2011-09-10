@@ -41,7 +41,7 @@ public class MainActivity extends MenuedActivity
     {
         final LinearLayout buttonsLayout = (LinearLayout)findViewById(R.id.buttonsLayout);
 
-        String[] cardValues = Utils.getCardValues(getResources(), PreferenceManager.getDefaultSharedPreferences(this));
+        String[] cardValues = Utils.getCardValues(getResources(), new Preferences(PreferenceManager.getDefaultSharedPreferences(this)));
 
         buttonsLayout.removeAllViews();
 

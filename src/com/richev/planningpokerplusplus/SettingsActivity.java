@@ -28,8 +28,8 @@ public class SettingsActivity extends PreferenceActivity
     {
         super.onPause();
 
-        if (mainActivity != null)
-        { // It should never be null, but check just to be sure
+        if (mainActivity != null) // It should never be null, but check just to be sure
+        {
             // In case card settings have changed, refresh them
             mainActivity.showCardButtons();
         }

@@ -4,6 +4,7 @@
 
 <FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardContainer"
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -124,5 +125,19 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp">
         </com.richev.planningpokerplusplus.UpsideDownImageView>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/backLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="invisible">
+        <ImageView
+            android:src="@drawable/card_back"
+            android:scaleType="fitXY"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true">
+        </ImageView>
     </RelativeLayout>
 </FrameLayout>
