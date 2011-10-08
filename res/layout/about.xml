@@ -4,73 +4,87 @@
 
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <LinearLayout
-        android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true">
+        android:layout_height="fill_parent"
+        android:fillViewport="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="55dp">
         <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_height="wrap_content"
-                android:src="@drawable/app_icon"
-                android:layout_width="wrap_content"
-                android:id="@+id/imageView1" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/app_icon"
+                    android:layout_width="wrap_content"
+                    android:id="@+id/imageView1" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/about_text"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/about" />
+            </LinearLayout>
             <TextView
                 android:layout_width="wrap_content"
-                android:text="@string/about_text"
+                android:text="@string/about_instructions_heading"
+                android:textStyle="bold"
                 android:layout_height="wrap_content"
-                android:id="@+id/about" />
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/about_instructions"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/planning_poker"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:id="@+id/planningPoker"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/feedback_text"
+                android:id="@+id/feedback"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/icon_credits"
+                android:id="@+id/iconCredits"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:text="@string/copyright_text"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
+    </ScrollView>
+    <Button
+        android:id="@+id/closeButton"
+        android:text="@string/about_close"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/planning_poker"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:id="@+id/planningPoker"
-            android:layout_marginBottom="10dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/feedback_text"
-            android:id="@+id/feedback"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/icon_credits"
-            android:id="@+id/iconCredits"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="@string/copyright_text"
-            android:gravity="center_horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp" />
-        <Button
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_width="wrap_content"
-            android:text="@string/about_close"
-            android:textSize="20dp"
-            android:id="@+id/closeButton"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp" />
-    </LinearLayout>
+        android:layout_width="wrap_content"
+        android:textSize="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></Button>
 </RelativeLayout>

@@ -62,8 +62,7 @@ public final class R {
     public static final class layout {
         public static final int about=0x7f030000;
         public static final int card=0x7f030001;
-        public static final int help=0x7f030002;
-        public static final int main=0x7f030003;
+        public static final int main=0x7f030002;
     }
     public static final class menu {
         public static final int mainmenu=0x7f070000;
@@ -72,23 +71,24 @@ public final class R {
         /**  Used on the about dialog 
          */
         public static final int about_close=0x7f060005;
+        public static final int about_instructions=0x7f060008;
+        public static final int about_instructions_heading=0x7f060007;
         public static final int about_text=0x7f060006;
         public static final int app_name=0x7f060000;
-        public static final int copyright_text=0x7f060009;
-        public static final int feedback_text=0x7f06000a;
-        public static final int icon_credits=0x7f06000b;
-        public static final int instructions=0x7f060007;
+        public static final int copyright_text=0x7f06000a;
+        public static final int feedback_text=0x7f06000b;
+        public static final int icon_credits=0x7f06000c;
         /**  Used on the app menu 
          */
         public static final int menu_about=0x7f060002;
         public static final int menu_settings=0x7f060003;
         public static final int menu_share=0x7f060004;
-        public static final int planning_poker=0x7f060008;
+        public static final int planning_poker=0x7f060009;
         public static final int settings=0x7f060001;
-        public static final int share_body=0x7f06000d;
+        public static final int share_body=0x7f06000e;
         /**  Used if the user opts to share this app (via email, etc) 
          */
-        public static final int share_subject=0x7f06000c;
+        public static final int share_subject=0x7f06000d;
     }
     public static final class xml {
         public static final int settings=0x7f040000;
