@@ -3,8 +3,6 @@
 
 package com.richev.planningpokerplusplus;
 
-import com.richev.planningpokerplusplus.R;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -30,6 +28,14 @@ public class MainActivity extends MenuedActivity
         showCardButtons();
 
         SettingsActivity.mainActivity = this;
+        
+        Startup startup = new Startup(this);
+        
+        if (!startup.getHasRun())
+        {
+            startup.setHasRun();
+            showAboutDialog();
+        }
     }
 
     /**

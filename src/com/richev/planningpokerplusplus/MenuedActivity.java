@@ -45,7 +45,7 @@ public class MenuedActivity extends Activity
         }
     }
 
-    private void showAboutDialog()
+    protected void showAboutDialog()
     {
         Intent aboutActivity = new Intent(getBaseContext(), AboutActivity.class);
         startActivity(aboutActivity);
