@@ -47,7 +47,7 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private static final float CARD_SHADOW_DARKEST_HIDING = 0.25f;
     private static final float CARD_SHADOW_DARKEST_SHOWING = 0f;
 
-    private static final int CARD_ANIMATION_DURATION = 1000;
+    private static final int CARD_ANIMATION_DURATION = 400;
     
     private Preferences _prefs;
 
