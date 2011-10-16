@@ -64,6 +64,14 @@
                 android:layout_marginBottom="10dp" />
             <TextView
                 android:layout_width="wrap_content"
+                android:text="@string/source_code"
+                android:id="@+id/sourceCode"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp" />
+            <TextView
+                android:layout_width="wrap_content"
                 android:text="@string/icon_credits"
                 android:id="@+id/iconCredits"
                 android:layout_gravity="center_horizontal"

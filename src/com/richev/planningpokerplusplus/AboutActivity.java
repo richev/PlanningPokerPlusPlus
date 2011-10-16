@@ -29,6 +29,7 @@ public class AboutActivity extends Activity
 
         linkifyTextView(R.id.feedback, Linkify.EMAIL_ADDRESSES);
         linkifyTextView(R.id.planningPoker, Linkify.WEB_URLS);
+        linkifyTextView(R.id.sourceCode, Linkify.WEB_URLS);
         linkifyTextView(R.id.iconCredits, Linkify.WEB_URLS);
 
         this.setTitle(this.getTitle() + " v" + getVersionName());

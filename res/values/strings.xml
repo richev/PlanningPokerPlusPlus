@@ -17,6 +17,7 @@
     <string name="about_instructions_heading">Instructions</string>
     <string name="about_instructions">Tap the button to select the value of your estimate.\nTo increase or decrease your estimate swipe right or left.\nTo hide your estimate swipe up. To unhide, swipe up again.\nTo change the card values to suit those used by your team use the Settings menu.</string>
     <string name="planning_poker">Want to learn about Planning Poker?\nhttp://en.wikipedia.org/wiki/Planning_poker</string>
+    <string name="source_code">Source code available on GitHub at\nhttp://bit.ly/plapokplusplus-github</string>
     <string name="copyright_text">Copyright © 2011 Richard Everett</string>
     <string name="feedback_text">Have comments or a feature request?\nrichardneverett@gmail.com</string>
     <string name="icon_credits">Menu icons by\nhttp://www.androidicons.com</string>
