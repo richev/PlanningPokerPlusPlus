@@ -18,6 +18,11 @@ import android.graphics.Canvas;
 public class Utils
 {
     /**
+     * Internal ID used for the coffee card
+     */
+    public static final String COFFEE_CARD = "coffee";
+    
+    /**
      * Gets the sequence of card values, based on user settings
      * 
      * @param res use getResources()
@@ -51,7 +56,7 @@ public class Utils
 
         if (prefs.getIncludeCoffee())
         {
-            cardValues.add("coffee");
+            cardValues.add(COFFEE_CARD);
         }
 
         return cardValues.toArray(new String[cardValues.size()]);

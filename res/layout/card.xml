@@ -8,12 +8,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:keepScreenOn="true">
+    <!-- This is the layout used for displaying the current card (unless the coffee card is shown) -->
     <RelativeLayout
         android:id="@+id/cardLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/card_border">
-        <!-- This is the layout used for displaying the current card (unless the coffee card is shown) -->
         <TextView
             android:layout_height="wrap_content"
             android:id="@+id/cardValueTopLeft"
@@ -73,12 +73,12 @@
             android:layout_marginBottom="8dp">
         </com.richev.planningpokerplusplus.UpsideDownTextView>
     </RelativeLayout>
+    <!-- This layout is used as an "animated" card during card transitions -->
     <RelativeLayout
         android:id="@+id/cardLayoutAni"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/card_border">
-        <!-- This layout is used as an "animated" card during card transitions -->
         <TextView
             android:layout_height="wrap_content"
             android:id="@+id/cardValueTopLeftAni"
@@ -138,12 +138,12 @@
             android:layout_marginBottom="8dp">
         </com.richev.planningpokerplusplus.UpsideDownTextView>
     </RelativeLayout>
+    <!-- This layout displays a "coffee" card -->
     <RelativeLayout
         android:id="@+id/coffeeLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/card_border">
-        <!-- This layout displays a "coffee" card -->
         <ImageView
             android:src="@drawable/coffee"
             android:scaleType="fitXY"
@@ -193,13 +193,13 @@
             android:layout_marginBottom="16dp">
         </com.richev.planningpokerplusplus.UpsideDownImageView>
     </RelativeLayout>
+    <!-- This layout displays the back of a card (for hiding the current card's value) -->
     <RelativeLayout
         android:id="@+id/backLayout"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:background="@drawable/card_back_border"
         android:visibility="invisible">
-        <!-- This layout displays the back of a card (for hiding the current card's value) -->
         <ImageView
             android:src="@drawable/card_back"
             android:scaleType="fitXY"

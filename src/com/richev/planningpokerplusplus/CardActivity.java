@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
@@ -42,8 +43,11 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private GestureDetector _gestureDetector;
     private View.OnTouchListener _gestureListener;
 
-    private static final int CARD_ANIMATION_DURATION = 400;
-    
+    private static final float CARD_SHADOW_LIGHTEST = 1f;
+    private static final float CARD_SHADOW_DARKEST_HIDING = 0.25f;
+    private static final float CARD_SHADOW_DARKEST_SHOWING = 0f;
+
+    private static final int CARD_ANIMATION_DURATION = 1000;
     
     private Preferences _prefs;
 
@@ -122,6 +126,8 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         cardContainer.setOnClickListener(CardActivity.this); 
         cardContainer.setOnTouchListener(_gestureListener);
 
+        findViewById(R.id.coffeeLayout).setVisibility(View.INVISIBLE); // temporary
+        
         refreshCard(CardView.Static);
     }
 
@@ -155,39 +161,45 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     
     private void animateCard(CardTransition cardTransition)
     {
-        View animatedCard = findViewById(R.id.cardLayoutAni);
-        findViewById(R.id.cardLayoutAni).setVisibility(View.VISIBLE);
-        animatedCard.bringToFront();
-        
         Display display = getWindowManager().getDefaultDisplay(); 
         final int pivotX = display.getWidth() / 2;
         final int pivotY = display.getHeight() + (display.getHeight() / 2); // somewhere off the bottom of the screen        
         final int cardMaxAngle = 60; // so the card starts/ends off-screen
-        
-        RotateAnimation ra;
+
+        AlphaAnimation alphaAnimation;
+        RotateAnimation rotateAnimation;
         
         if (cardTransition == CardTransition.Increment)
         {
-            ra = new RotateAnimation(0, cardMaxAngle, pivotX, pivotY);
+            alphaAnimation = new AlphaAnimation(CARD_SHADOW_DARKEST_SHOWING, CARD_SHADOW_LIGHTEST);
+            rotateAnimation = new RotateAnimation(0, cardMaxAngle, pivotX, pivotY);
         }
         else
         {
-            ra = new RotateAnimation(cardMaxAngle, 0, pivotX, pivotY);
+            alphaAnimation = new AlphaAnimation(CARD_SHADOW_LIGHTEST, CARD_SHADOW_DARKEST_HIDING);
+            rotateAnimation = new RotateAnimation(cardMaxAngle, 0, pivotX, pivotY);
         }
         
-        ra.setDuration(CARD_ANIMATION_DURATION);
-        ra.setAnimationListener(new AnimationListener()
+        rotateAnimation.setDuration(CARD_ANIMATION_DURATION);
+        alphaAnimation.setDuration(CARD_ANIMATION_DURATION);
+
+        rotateAnimation.setAnimationListener(new AnimationListener()
         {
             public void onAnimationEnd(Animation animation)
             {
                 refreshCard(CardView.Static);
-                findViewById(R.id.cardLayoutAni).setVisibility(View.INVISIBLE);
             }
             public void onAnimationRepeat(Animation animation) {}
             public void onAnimationStart(Animation animation) {}
         });
         
-        animatedCard.startAnimation(ra);
+        View animatedCard = findViewById(R.id.cardLayoutAni);
+        animatedCard.setVisibility(View.VISIBLE);
+        animatedCard.bringToFront();
+
+        getCurrentCardView().startAnimation(alphaAnimation);
+
+        animatedCard.startAnimation(rotateAnimation);
     }
     
     private boolean getCardBackShown()
@@ -198,13 +210,16 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     private void toggleCardBack()
     {
         View backLayout = findViewById(R.id.backLayout);
-        Display display = getWindowManager().getDefaultDisplay(); 
-        TranslateAnimation ta;
+        Display display = getWindowManager().getDefaultDisplay();
+        
+        AlphaAnimation alphaAnimation;
+        TranslateAnimation cardBackAnimation;
         
         if (getCardBackShown())
         {
-            ta = new TranslateAnimation(0, 0, 0, -display.getHeight());
-            ta.setAnimationListener(new AnimationListener()
+            alphaAnimation = new AlphaAnimation(CARD_SHADOW_DARKEST_SHOWING, CARD_SHADOW_LIGHTEST);
+            cardBackAnimation = new TranslateAnimation(0, 0, 0, -display.getHeight());
+            cardBackAnimation.setAnimationListener(new AnimationListener()
             {
                 public void onAnimationEnd(Animation animation)
                 {
@@ -217,15 +232,19 @@ public class CardActivity extends MenuedActivity implements OnClickListener
         }
         else
         {
-            ta = new TranslateAnimation(0, 0, display.getHeight(), 0);
+            alphaAnimation = new AlphaAnimation(CARD_SHADOW_LIGHTEST, CARD_SHADOW_DARKEST_HIDING);
+            cardBackAnimation = new TranslateAnimation(0, 0, display.getHeight(), 0);
             
             backLayout.setVisibility(View.VISIBLE);
             backLayout.bringToFront();
             findViewById(R.id.cardContainer).setKeepScreenOn(false);
         }
         
-        ta.setDuration(CARD_ANIMATION_DURATION);
-        backLayout.startAnimation(ta);
+        alphaAnimation.setDuration(CARD_ANIMATION_DURATION);
+        cardBackAnimation.setDuration(CARD_ANIMATION_DURATION);
+
+        getCurrentCardView().startAnimation(alphaAnimation);
+        backLayout.startAnimation(cardBackAnimation);
     }
 
     private void incrementCard()
@@ -279,16 +298,39 @@ public class CardActivity extends MenuedActivity implements OnClickListener
     {
         Vibrator vibrator = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
 
-        vibrator.vibrate(50);
+        vibrator.vibrate(50); // Just a short buzz
+    }
+    
+    private Boolean currentCardIsCoffeeCard()
+    {
+        return _cardValue.equals(Utils.COFFEE_CARD);
+    }
+    
+    private View getCurrentCardView()
+    {
+        return currentCardIsCoffeeCard() ?
+            findViewById(R.id.coffeeLayout) :
+            findViewById(R.id.cardLayout);
     }
 
     private void refreshCard(CardView cardView)
     {
         findViewById(R.id.backLayout).setVisibility(View.INVISIBLE);
+        
+        View coffeeCard = findViewById(R.id.coffeeLayout);
+        View normalCard = findViewById(R.id.cardLayout);
+        View animatedCard = findViewById(R.id.cardLayoutAni);
 
-        if (_cardValue.equals("coffee"))
+        if (currentCardIsCoffeeCard())
         {
-            findViewById(R.id.coffeeLayout).bringToFront();
+            coffeeCard.setVisibility(View.VISIBLE);
+            coffeeCard.bringToFront();
+            normalCard.setVisibility(View.INVISIBLE);
+            
+            if (cardView == CardView.Static)
+            {
+                animatedCard.setVisibility(View.INVISIBLE);
+            }
         }
         else
         {
@@ -296,7 +338,10 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             
             if (cardView == CardView.Static)
             {
-                findViewById(R.id.cardLayout).bringToFront();
+                normalCard.setVisibility(View.VISIBLE);
+                normalCard.bringToFront();
+                coffeeCard.setVisibility(View.INVISIBLE);
+                animatedCard.setVisibility(View.INVISIBLE);
 
                 TextView[] cardValueViewsStatic =
                 {
@@ -311,8 +356,8 @@ public class CardActivity extends MenuedActivity implements OnClickListener
             }
             else
             {
-                findViewById(R.id.cardLayoutAni).bringToFront();
-                findViewById(R.id.cardLayoutAni).setVisibility(View.VISIBLE);
+                animatedCard.bringToFront();
+                animatedCard.setVisibility(View.VISIBLE);
 
                 TextView[] cardValueViewsAni =
                 {
