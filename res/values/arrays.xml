@@ -6,14 +6,16 @@
     <!-- UI strings shown on settings page -->
     <string-array name="cardSequenceDisplayNames">
         <item>Compact Fibonacci\n1 2 3 5 8</item>
-        <item>Regular Fibonacci\n1 2 3 5 8 13 21</item>
-        <item>Extended Fibonacci\n1 2 3 5 8 13 20 40 100</item>
+        <item>Regular Fibonacci\n1 … 8 13 21</item>
+        <item>Literal Fibonacci\n1 … 8 13 21 34 55 89</item>
+        <item>Extended Fibonacci\n1 … 8 13 20 40 100</item>
         <item>Monetary units\n1 2 5 10 20 50 100</item>
     </string-array>
     <!-- Internal IDs -->
     <string-array name="cardSequenceNames">
         <item>fibonacci8</item>
         <item>fibonacci21</item>
+        <item>fibonacci89</item>
         <item>extendedFibonacci</item>
         <item>moneySequence</item>
     </string-array>
@@ -21,6 +23,7 @@
     <string-array name="cardSequenceValues">
         <item>1 2 3 5 8</item>
         <item>1 2 3 5 8 13 21</item>
+        <item>1 2 3 5 8 13 21 34 55 89</item>
         <item>1 2 3 5 8 13 20 40 100</item>
         <item>1 2 5 10 20 50 100</item>
     </string-array>
