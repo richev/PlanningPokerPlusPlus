@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Planning Poker++ for Android, copyright (c) Richard Everett 2011 -->
+<!-- Planning Poker++ for Android, copyright (c) Richard Everett 2012 -->
 <!-- Full source available on GitHub at http://richev.github.com/PlanningPokerPlusPlus -->
 
 <resources>
@@ -18,11 +18,11 @@
     <string name="about_instructions">Tap the button to select the value of your estimate.\nTo increase or decrease your estimate swipe right or left.\nTo hide your estimate swipe up. To unhide, swipe up again.\nTo change the card values to suit those used by your team use the Settings menu.</string>
     <string name="planning_poker">Want to learn about Planning Poker?\nhttp://en.wikipedia.org/wiki/Planning_poker</string>
     <string name="source_code">Source code available on GitHub at\nhttp://bit.ly/plapokplusplus-github</string>
-    <string name="copyright_text">Copyright © 2011 Richard Everett</string>
+    <string name="copyright_text">Copyright © 2012 Richard Everett</string>
     <string name="feedback_text">Have comments or a feature request?\nrichardneverett@gmail.com</string>
     <string name="icon_credits">Menu icons by\nhttp://www.androidicons.com</string>
 
     <!-- Used if the user opts to share this app (via email, etc) -->
     <string name="share_subject">Check out Planning Poker++ for Android</string>
-    <string name="share_body">I\'ve been using Planning Poker++ for Android. Check it out in the Android Marketplace at http://bit.ly/plapokplusplus.</string>
+    <string name="share_body">I\'ve been using Planning Poker++ for Android. Check it out in Google Play at http://bit.ly/plapokplusplus.</string>
 </resources>

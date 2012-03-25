@@ -1,4 +1,4 @@
-Planning Poker++ for Android, copyright (c) 2011 Richard Everett
+Planning Poker++ for Android, copyright (c) 2012 Richard Everett
 
 Available on the Android Market at https://market.android.com/details?id=com.richev.planningpokerplusplus
 
